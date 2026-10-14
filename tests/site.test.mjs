@@ -109,7 +109,7 @@ for (const f of legalOn ? LEGAL : []) {
   if (!existsSync(path.join(root, f))) { bad(f, 'файла нет'); continue; }
   const { page, ctx } = await open(f, 375);
   const t = await page.evaluate(() => document.body.innerText);
-  await check(f + ': h1 и реквизиты', async () => ((await page.$('h1')) && t.includes('Лугинова Евгения Романовна')) || 'нет h1 или ФИО');
+  await check(f + ': h1 и реквизиты', async () => ((await page.$('h1')) && /Лугинов(а|ой) Евгени(я|и) Романов(на|не)/.test(t)) || 'нет h1 или ФИО');
   await check(f + ': без Людмил и ЮKassa', async () => (!t.includes('Людмил') && !t.includes('ЮKassa')) || 'найдены устаревшие слова');
   await check(f + ': без горизонтальной прокрутки', async () => (await noOverflow(page)) || 'есть прокрутка');
   await ctx.close();

@@ -4,10 +4,10 @@ window.LINKS = {
   freeLessonBot: "#",   // Telegram-бот: бесплатный пробный урок
   courseBot: "#",       // Telegram-бот: оплата курса за 7990 ₽
   lessonBot: "#",       // Telegram-бот: оплата урока за 990 ₽
-  offer: "#",           // оферта
-  privacy: "#",         // политика конфиденциальности
-  consentData: "#",     // согласие на обработку персональных данных
-  consentMailing: "#"   // согласие на рассылку
+  offer: "oferta.html",
+  privacy: "privacy.html",
+  consentData: "consent-data.html",
+  consentMailing: "consent-mailing.html"
 };
 
 (function () {
