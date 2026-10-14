@@ -1,0 +1,131 @@
+/* Стиль «Мята». Токены цвета и шрифта сверху, всё остальное строится на них. */
+:root {
+  --bg: #ffffff;
+  --ink: #173a35;
+  --muted: #4b6560;
+  --soft: #e6f4f0;
+  --line: #cfe5df;
+  --accent: #1f7a6b;
+  --btn: #f2b134;
+  --btn-ink: #3b2a00;
+  --r-btn: 14px;
+  --r-card: 18px;
+  --font: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.55;
+}
+img { max-width: 100%; }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+.wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+section { padding-block: 40px; }
+.band { background: var(--soft); }
+
+h1, h2, h3 { font-weight: 800; line-height: 1.2; margin: 0 0 12px; text-wrap: balance; overflow-wrap: break-word; }
+h1 { font-size: clamp(1.7rem, 6.4vw, 2.7rem); }
+h2 { font-size: clamp(1.4rem, 4.6vw, 2rem); margin-bottom: 20px; }
+h3 { font-size: 1.15rem; }
+p { margin: 0 0 12px; }
+.lead { font-size: 1.1rem; color: var(--muted); }
+.muted { color: var(--muted); }
+
+/* кнопки */
+.btn {
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  min-height: 52px; padding: 12px 20px;
+  border-radius: var(--r-btn);
+  font-weight: 800; font-size: 1rem; text-decoration: none;
+  border: 2px solid transparent;
+}
+.btn.main { background: var(--btn); color: var(--btn-ink); }
+.btn.ghost { background: #fff; border-color: var(--accent); color: var(--accent); }
+.btn-row { display: grid; gap: 10px; margin-top: 20px; }
+
+/* плашки и заглушки */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; padding: 0; list-style: none; }
+.chip { background: var(--soft); color: var(--ink); font-weight: 700; font-size: .85rem; padding: 6px 12px; border-radius: 99px; }
+.photo, .shot {
+  border: 2px dashed var(--accent); background: var(--soft); color: var(--accent);
+  display: grid; place-items: center; text-align: center; font-size: .85rem; font-weight: 700; padding: 10px;
+}
+.photo { width: 140px; height: 140px; border-radius: 50%; }
+.shot { border-radius: 12px; aspect-ratio: 16 / 10; width: 100%; max-width: 100%; }
+
+/* первый экран */
+.hero { padding-top: 28px; }
+.hero-grid { display: grid; gap: 24px; }
+.hero .note { margin-top: 16px; padding: 12px 16px; background: var(--soft); border-radius: 12px; font-weight: 700; }
+
+/* карточки */
+.grid { display: grid; gap: 16px; }
+.card { background: #fff; border: 1px solid var(--line); border-radius: var(--r-card); padding: 20px; min-width: 0; }
+.band .card { border-color: transparent; }
+.not-for { margin-top: 20px; padding: 16px 20px; border-left: 4px solid var(--accent); background: var(--soft); border-radius: 0 12px 12px 0; }
+
+/* программа */
+.lessons { counter-reset: lesson; list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 12px; }
+.lessons li { counter-increment: lesson; position: relative; padding: 14px 16px 14px 60px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+.lessons li::before {
+  content: counter(lesson); position: absolute; left: 14px; top: 14px;
+  width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: #fff;
+  display: grid; place-items: center; font-weight: 800;
+}
+.lessons strong { display: block; }
+.lessons span { color: var(--muted); }
+.ticks { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.ticks li { position: relative; padding-left: 30px; }
+.ticks li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 800; }
+
+/* тарифы */
+.price-card { display: flex; flex-direction: column; gap: 12px; }
+.price-card .price { font-size: 2.2rem; font-weight: 800; line-height: 1; }
+.price-card.featured { background: var(--soft); border: 3px solid var(--accent); }
+.price-card .tag { align-self: flex-start; background: var(--accent); color: #fff; font-size: .8rem; font-weight: 800; padding: 4px 10px; border-radius: 99px; }
+.price-note { margin-top: 16px; font-weight: 700; }
+
+/* об авторе */
+.author-row { display: grid; gap: 20px; align-items: center; }
+
+/* вопросы и ответы */
+.faq details { border: 1px solid var(--line); border-radius: 14px; background: #fff; margin-bottom: 10px; }
+.faq summary { cursor: pointer; min-height: 48px; padding: 12px 16px; font-weight: 800; list-style-position: inside; display: flex; align-items: center; }
+.faq summary:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+.faq details[open] summary { color: var(--accent); }
+.faq details p { padding: 0 16px 14px; margin: 0; }
+
+/* подвал */
+footer { background: var(--ink); color: #e6f4f0; padding-block: 32px; font-size: .95rem; }
+footer a { color: #fff; }
+footer ul { list-style: none; padding: 0; margin: 0 0 16px; display: grid; gap: 8px; }
+footer address { font-style: normal; color: #cfe5df; }
+
+/* от 768px колонки идут в ряд */
+@media (min-width: 768px) {
+  section { padding-block: 64px; }
+  .hero-grid { grid-template-columns: 1.5fr 1fr; align-items: center; }
+  .hero .photo { width: 260px; height: 260px; justify-self: center; }
+  .btn-row { grid-template-columns: repeat(2, auto); justify-content: start; }
+  .btn-row .btn { padding-inline: 28px; }
+  .grid.three { grid-template-columns: repeat(3, 1fr); }
+  .grid.two { grid-template-columns: repeat(2, 1fr); }
+  .author-row { grid-template-columns: auto 1fr; }
+  footer ul { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

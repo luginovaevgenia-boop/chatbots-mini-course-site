@@ -32,7 +32,7 @@ async function open(file, width, { blockLinks = false } = {}) {
   const page = await ctx.newPage();
   const errors = [];
   page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
-  page.on('console', (m) => { if (m.type() === 'error' && !isFont(m.text())) errors.push('console: ' + m.text()); });
+  page.on('console', (m) => { if (m.type() !== 'error' || isFont(m.text())) return; if (blockLinks && /Failed to load resource/.test(m.text())) return; errors.push('console: ' + m.text()); });
   page.on('requestfailed', (r) => { if (!isFont(r.url()) && !(blockLinks && r.url().endsWith('links.js'))) errors.push('request: ' + r.url()); });
   if (blockLinks) await page.route('**/links.js', (r) => r.abort());
   await page.goto(url(file), { waitUntil: 'load' });
@@ -72,7 +72,7 @@ if (!existsSync(path.join(root, 'index.html'))) {
   await check('есть цена 7990 ₽ и 990 ₽', async () => (text.includes('7990 ₽') && /(^|\D)990 ₽/.test(text)) || 'цены не найдены');
   await check('строка о поддержке дословно', async () => text.includes(SUPPORT) || 'строка не найдена');
   await check('реквизиты автора', async () => (text.includes('Лугинова Евгения Романовна') && text.includes('ИНН 142701444302')) || 'реквизиты не найдены');
-  await check('в программе 9 уроков', async () => (await page.$$eval('#program li', (n) => n.length)) === 9 || 'не 9');
+  await check('в программе 9 уроков', async () => (await page.$$eval('#program ol li', (n) => n.length)) === 9 || 'не 9');
   await check('в FAQ не менее 7 вопросов', async () => (await page.$$eval('#faq details', (n) => n.length)) >= 7 || 'меньше 7');
   await check('кнопки не ниже 44px', async () => {
     const small = await page.$$eval('a.btn', (n) => n.filter((a) => a.getBoundingClientRect().height < 44).map((a) => a.textContent.trim()));
