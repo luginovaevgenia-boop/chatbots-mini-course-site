@@ -53,6 +53,7 @@ if (!existsSync(path.join(root, 'index.html'))) {
 
   const { page, ctx, errors } = await open('index.html', 375);
   const text = await page.evaluate(() => document.body.innerText);
+  const fullText = await page.evaluate(() => document.body.textContent);
 
   await check('секции на месте', async () => {
     const missing = [];
@@ -88,7 +89,7 @@ if (!existsSync(path.join(root, 'index.html'))) {
     return css === true || 'нет видимого фокуса';
   });
 
-  const holes = [...new Set(text.match(/\[[^\]]{2,}\]/g) || [])];
+  const holes = [...new Set(fullText.match(/\[[^\]]{2,}\]/g) || [])];
   if (holes.length) {
     console.log('  warn незаполнено (' + holes.length + '): ' + holes.join(' ; '));
     if (process.env.STRICT === '1') bad('STRICT: заглушки [..]', holes.length + ' шт.');
@@ -112,6 +113,11 @@ for (const f of legalOn ? LEGAL : []) {
   await check(f + ': h1 и реквизиты', async () => ((await page.$('h1')) && /Лугинов(а|ой) Евгени(я|и) Романов(на|не)/.test(t)) || 'нет h1 или ФИО');
   await check(f + ': без Людмил и ЮKassa', async () => (!t.includes('Людмил') && !t.includes('ЮKassa')) || 'найдены устаревшие слова');
   await check(f + ': без горизонтальной прокрутки', async () => (await noOverflow(page)) || 'есть прокрутка');
+  const lh = [...new Set(t.match(/\[[^\]]{2,}\]/g) || [])];
+  if (lh.length) {
+    console.log('  warn ' + f + ' незаполнено (' + lh.length + '): ' + lh.join(' ; '));
+    if (process.env.STRICT === '1') bad(f + ': STRICT заглушки', lh.length + ' шт.');
+  }
   await ctx.close();
 }
 

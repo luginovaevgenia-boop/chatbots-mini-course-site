@@ -18,4 +18,12 @@
 Положите файлы в папку `assets/`. Места под них в `index.html` помечены пунктирными рамками с подписью.
 
 ## Проверка
-`node tests/site.test.mjs`. С `STRICT=1` проверка падает, если на странице остались незаполненные места `[…]`.
+`node tests/site.test.mjs`. С `STRICT=1` проверка падает, если остались незаполненные места `[…]`.
+
+## Юридические страницы
+Собираются из markdown командой `python3 tools/build_legal.py <папка с .md>` (нужен `pip install markdown`). Исходники лежат в приватном репозитории, в `docs/legal/`.
+
+## Публикация
+Settings → Pages → Deploy from a branch → `main` / root. Адрес: `luginovaevgenia-boop.github.io/chatbots-mini-course-site`.
+
+Перед включением Pages замените заглушки `[…]` и проверьте оферту: на ней стоит плашка «ЧЕРНОВИК».
